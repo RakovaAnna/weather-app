@@ -3,9 +3,9 @@ import './App.css';
 import FormChooseCity from "./components/FormChooseCity";
 import MiniCardDay from "./components/MiniCardDay";
 import DetailedCard from "./components/DetailedCard";
-import * as func from './helpers';
+import {getApiWeather} from './components/GetWeather';
 
-const API_key = process.env.REACT_APP_WEATHER_API_KEY;
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 const units = "metric";
 const lang = "ru"
 
@@ -13,43 +13,17 @@ const lang = "ru"
 class App extends React.Component {
 
     state = {
+        time: undefined,
         city: undefined,
         today: undefined,
-        time: undefined,
         days: [],
-        error: undefined
+        error: ""
     }
 
     getWeather = async (event) => {
         event.preventDefault();
         const city = event.target.elements.city.value;
-        console.log(city);
-        console.log(API_key);
-        const api_url = await
-            fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_key}&units=${units}&lang=${lang}`);
-        console.log(api_url);
-        const data = await api_url.json();
-        if (data.cod === '200') {
-            const dailyData = data.list.filter(reading => reading.dt_txt.includes("12:00:00")&&!(reading.dt_txt.includes(func.today())));
-            const weatherNow = data.list.shift();
-            var timestamp = new Date().getTime() + data.city.timezone;
-            console.log(weatherNow);
-            this.setState({
-                time: timestamp,
-                city: city,
-                today: weatherNow,
-                days: dailyData,
-                error: undefined
-            });
-        } else {
-            this.setState({
-                time: undefined,
-                city: undefined,
-                today: undefined,
-                days: [],
-                error: "Город не найден"
-            });
-        }
+        getApiWeather(city, API_KEY, units, lang, this);
     }
 
     formatCards = () => {
@@ -59,23 +33,26 @@ class App extends React.Component {
     render() {
         return (
             <div className="main">
-                <h1 className="info">ПРОГНОЗ ПОГОДЫ</h1>
+                <h1 className="info">Прогноз погоды</h1>
                 <FormChooseCity weather={this.getWeather}/>
-                {this.state.city &&
                 <div className="container-fluid">
-                    <div className="row justify-content-center ">
-                        <div className="col-sm-4">
-                            <DetailedCard day={this.state.today} city={func.ucFirst(this.state.city)} time={this.state.time}/>
-                        </div>
-                        <div className="col-sm-8">
-                            <div className="row align-items-center">
-                                {this.formatCards()}
+                    {this.state.city &&
+                    <div>
+                        <h2 className="card-title">{this.state.city}</h2>
+                        <div className="row justify-content-center ">
+                            <div className="col-sm-4">
+                                <DetailedCard day={this.state.today} city={this.state.city} time={this.state.time}/>
+                            </div>
+                            <div className="col-sm-8">
+                                <div className="row align-items-center">
+                                    {this.formatCards()}
+                                </div>
                             </div>
                         </div>
                     </div>
+                    }
+                    <p className="error">{this.state.error}</p>
                 </div>
-                }
-                <p className="error">{this.state.error}</p>
             </div>
         );
     }

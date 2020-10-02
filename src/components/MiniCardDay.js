@@ -16,7 +16,7 @@ class MiniCardDay extends React.Component {
                     <img src={imgURL}/>
                     <h2>{Math.round(this.props.day.main.temp)} °C</h2>
                     <div className="card-body">
-                        <p className="card-text">{func.ucFirst(this.props.day.weather[0].description)}</p>
+                        <p className="card-text">{this.props.day.weather[0].description}</p>
                     </div>
                 </div>
             </div>
