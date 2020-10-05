@@ -7,7 +7,7 @@ import {getApiWeather} from './components/GetWeather';
 
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 const units = "metric";
-const lang = "ru"
+const lang = "ru";
 
 
 class App extends React.Component {

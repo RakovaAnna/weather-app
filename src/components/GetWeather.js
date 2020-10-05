@@ -25,6 +25,14 @@ export const getApiWeather = async (city, API_KEY, units, lang, state) => {
     }
 
     const data = dataRu.cod === '200' ? dataRu : dataEn;
+    const x = new Date();
+    const currentTimeZoneOffsetInHours = x.getTimezoneOffset();
+    console.log(x);
+    console.log(x.toUTCString());
+    console.log(data);
+    console.log(currentTimeZoneOffsetInHours);
+
+
     const dailyData = data.list.filter(reading => reading.dt_txt.includes("12:00:00") && !(reading.dt_txt.includes(func.today())));
     const weatherNow = data.list.shift();
     const timestamp = new Date().getTime() + data.city.timezone;

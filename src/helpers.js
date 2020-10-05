@@ -6,8 +6,8 @@ export function monthDay(ms) {
     return new Date(ms).toLocaleDateString("ru", {day: 'numeric', month: 'long'});
 }
 
-export function iconWeather(icon, size) {
-    return "http://openweathermap.org/img/wn/" + icon + "@" + size + ".png";
+export function iconWeather(icon) {
+    return "http://openweathermap.org/img/wn/" + icon + "@4x.png";
 }
 
 export function today() {
