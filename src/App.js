@@ -11,6 +11,10 @@ const API_key = process.env.REACT_APP_WEATHER_API_KEY;
 const units = "metric";
 const lang = "ru"
 
+import './App.model.css';
+import ChooseCityForm from "./components/ChooseCityForm/ChooseCityForm";
+import WeatherCard from "./components/WeatherCard/WeatherCard";
+import {getWeather} from './utils/getWeather';
 
 class AppComponent extends React.Component {
 
@@ -25,41 +29,12 @@ class AppComponent extends React.Component {
     getWeather = async (event) => {
         event.preventDefault();
         const city = event.target.elements.city.value;
-        console.log(city);
-        console.log(API_key);
-        const api_url = await
-            fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_key}&units=${units}&lang=${lang}`);
-        console.log(api_url);
-        const data = await api_url.json();
-        if (data.cod === '200') {
-            const dailyData = data.list.filter(reading => reading.dt_txt.includes("12:00:00")&&!(reading.dt_txt.includes(func.today())));
-            const weatherNow = data.list.shift();
-            var timestamp = new Date().getTime() + data.city.timezone;
-            console.log(weatherNow);
-            this.setState({
-                time: timestamp,
-                city: city,
-                today: weatherNow,
-                days: dailyData,
-                error: undefined
-            });
-        } else {
-            this.setState({
-                time: undefined,
-                city: undefined,
-                today: undefined,
-                days: [],
-                error: "Город не найден"
-            });
-        }
-    }
-
-    formatCards = () => {
-        return this.state.days.map((day, index) => <MiniCardDay day={day} key={index}/>)
+        await getWeather(city, this);
     }
 
     render() {
         const {location} = this.props;
+        const {state} = this;
         return (
             <div className="main">
                 <h1 className="info">ПРОГНОЗ ПОГОДЫ {location}</h1>
@@ -80,6 +55,9 @@ class AppComponent extends React.Component {
                 }
                 <button onClick={()=>this.props.onSetLocation(Date.now())}>{location}</button>
                 <p className="error">{this.state.error}</p>
+                <h1 className="info">Прогноз погоды</h1>
+                <ChooseCityForm weather={this.getWeather}/>
+                <WeatherCard city ={state.city} time={state.time} today={state.today} days={state.days} error={state.error}/>
             </div>
         );
     }

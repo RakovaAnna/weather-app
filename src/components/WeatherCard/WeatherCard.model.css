@@ -1,0 +1,10 @@
+.container-fluid {
+    background-color: rgba(245, 255, 255, 0.3);
+    padding: 20px;
+}
+
+.error {
+    color: #041f3c;
+    font-weight: bold;
+    text-align: center;
+}

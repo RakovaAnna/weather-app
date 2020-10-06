@@ -1,0 +1,28 @@
+.DetailedCard {
+    padding: 15px;
+}
+
+.baseData {
+    font-weight: bold;
+    font-size: 24px;
+    margin: 0px;
+}
+
+.details-weather {
+    font-size: 150%;
+}
+
+.row {
+    justify-content: center;
+}
+
+.temperature {
+    font-weight: bold;
+    font-size: 4em;
+    margin: 0px;
+}
+
+.feels {
+    text-align: left;
+    padding: 0px;
+}
