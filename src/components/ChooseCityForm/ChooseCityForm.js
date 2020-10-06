@@ -1,6 +1,7 @@
 import React from "react";
+import style from './ChooseCityForm.model.css';
 
-class FormChooseCity extends React.Component {
+class ChooseCityForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.props.weather}>
@@ -11,5 +12,5 @@ class FormChooseCity extends React.Component {
     }
 }
 
-export default FormChooseCity;
+export default ChooseCityForm;
 

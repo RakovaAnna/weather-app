@@ -1,7 +1,8 @@
 import React from "react";
-import * as func from '../helpers';
+import * as func from '../../utils/getDaysInfo';
+import style from './MiniDayCard.module.css';
 
-class MiniCardDay extends React.Component {
+class MiniDayCard extends React.Component {
     render() {
         const {day} = this.props;
         const ms = day.dt * 1000;
@@ -12,11 +13,12 @@ class MiniCardDay extends React.Component {
         return (
             <div className="col-sm">
                 <div className="card-weather">
-                    <h4 className="card-title">{weekdayName},</h4>
-                    <h5 className="card-title">{monthDay}</h5>
+                {/*<div className={style.cardWeather}>*/}
+                    <h4>{weekdayName},</h4>
+                    <h5>{monthDay}</h5>
                     <img src={imgURL} width="150" height="150"  alt={day.weather[0].description}/>
                     <h2>{Math.round(day.main.temp)} °C</h2>
-                    <div className="card-body">
+                    <div>
                         <p className="card-text">{day.weather[0].description}</p>
                     </div>
                 </div>
@@ -25,4 +27,4 @@ class MiniCardDay extends React.Component {
     }
 }
 
-export default MiniCardDay;
+export default MiniDayCard;
