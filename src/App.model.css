@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body {
+  font-family: "Open Sans", serif;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.main {
+  background: url("./img/home4.jpg") center no-repeat fixed;
+  min-height: 100vh;
+  position: relative;
+  width: 100%;
+  -khtml-background-size: cover;
+  -moz-background-size: cover;
+  -ms-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+  padding: 20px;
+}
+
+form {
+  justify-content: center!important;
+  text-align: center;
+  margin:20px;
+}
+
+h1 {
+  margin: 10px;
+  text-align: center;
+  color: #000;
+  text-transform: uppercase!important;
+}
+
+h2 {
+  text-align: center;
+}
+
+h3 {
+  text-align: left;
+}
+
+p:first-letter, h4:first-letter, h5:first-letter {
+  text-transform: uppercase;
+}
+
+.container-fluid {
+  background-color: rgba(245, 255, 255, 0.3);
+  padding: 20px;
+}
+
+.card-weather {
+  background-color: rgba(5, 50, 82, 0.5);
+  color: #fff;
+  text-align: center;
+  max-width: 230px;
+  min-width: 230px;
+  margin: 10px;
+  align-items: center;
+}
