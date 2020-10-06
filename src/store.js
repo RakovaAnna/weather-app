@@ -2,10 +2,16 @@ import {createStore} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 const initialState = {
-    location: "Пермь"
+    location: "Пермь",
+    time: Date.now(),
+    weather: {
+        today: undefined,
+        nextDays: []
+    },
+    error: undefined
 };
-const setLocation = (location) => {
 
+export const setLocation = (location) => {
     return {
         type: "SET_LOCATION",
         payload: {
@@ -25,7 +31,8 @@ const reducer = (state=initialState, action) => {
     return state;
 };
 
-const store = createStore(reducer, composeWithDevTools(
+
+export const store = createStore(reducer, composeWithDevTools(
 
 ));
 window.store = store;

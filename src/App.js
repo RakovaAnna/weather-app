@@ -4,13 +4,15 @@ import FormChooseCity from "./components/FormChooseCity";
 import MiniCardDay from "./components/MiniCardDay";
 import DetailedCard from "./components/DetailedCard";
 import * as func from './helpers';
+import {connect} from "react-redux";
+import {setLocation} from "./store";
 
 const API_key = process.env.REACT_APP_WEATHER_API_KEY;
 const units = "metric";
 const lang = "ru"
 
 
-class App extends React.Component {
+class AppComponent extends React.Component {
 
     state = {
         city: undefined,
@@ -57,9 +59,10 @@ class App extends React.Component {
     }
 
     render() {
+        const {location} = this.props;
         return (
             <div className="main">
-                <h1 className="info">ПРОГНОЗ ПОГОДЫ</h1>
+                <h1 className="info">ПРОГНОЗ ПОГОДЫ {location}</h1>
                 <FormChooseCity weather={this.getWeather}/>
                 {this.state.city &&
                 <div className="container-fluid">
@@ -75,10 +78,24 @@ class App extends React.Component {
                     </div>
                 </div>
                 }
+                <button onClick={()=>this.props.onSetLocation(Date.now())}>{location}</button>
                 <p className="error">{this.state.error}</p>
             </div>
         );
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        location: state.location
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSetLocation: (location) => dispatch(setLocation(location))
+    }
+}
+
+export const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+
