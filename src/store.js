@@ -20,15 +20,36 @@ export const setLocation = (location) => {
     };
 };
 
+export const setData = (location, time, weather, error) => {
+    return {
+        type: "SET_DATA",
+        payload: {
+            location,
+            time,
+            weather,
+            error
+        }
+    };
+};
+
 const reducer = (state=initialState, action) => {
-    if (action.type === "SET_LOCATION") {
-        const newLocation = action.payload.location;
-        return {
-            ...state,
-            location: newLocation
-        };
+    switch (action.type) {
+        case "SET_LOCATION":
+            const newLocation = action.payload.location;
+            return {
+                ...state,
+                location: newLocation
+            };
+            break;
+        case "SET_DATA":
+            return {
+                location: action.payload.location,
+                time: action.payload.time,
+                weather: action.payload.weather,
+                error: action.payload.error
+            };
+        default: return state
     }
-    return state;
 };
 
 
