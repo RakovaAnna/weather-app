@@ -3,6 +3,7 @@ import './App.model.css';
 import ChooseCityForm from "./components/ChooseCityForm/ChooseCityForm";
 import WeatherCard from "./components/WeatherCard/WeatherCard";
 import {getWeather} from './utils/getWeather';
+import {api} from './api';
 
 class App extends React.Component {
 
@@ -14,19 +15,36 @@ class App extends React.Component {
         error: ""
     }
 
-    getWeather = async (event) => {
-        event.preventDefault();
-        const city = event.target.elements.city.value;
-        await getWeather(city, this);
+    handleCitySelect = (city) => {
+      api.loadWeatherForCity(city)
+        .then((cityForecast) => {
+          const {
+            city,
+            time,
+            today,
+            days,
+            error
+          } = cityForecast;
+
+          this.setState({
+            city,
+            time,
+            today,
+            days,
+            error
+          });
+        });
     }
 
     render() {
-        const {state} = this;
+        const {state: {city, time, today, days, error}} = this;
         return (
             <div className="main">
                 <h1 className="info">Прогноз погоды</h1>
-                <ChooseCityForm weather={this.getWeather}/>
-                <WeatherCard city ={state.city} time={state.time} today={state.today} days={state.days} error={state.error}/>
+                <ChooseCityForm
+                  onCitySelect={this.handleCitySelect}
+                />
+                <WeatherCard city ={city} time={time} today={today} days={days} error={error}/>
             </div>
         );
     }
