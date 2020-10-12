@@ -2,36 +2,26 @@ import React from 'react';
 import './App.model.css';
 import ChooseCityForm from "./components/ChooseCityForm/ChooseCityForm";
 import WeatherCard from "./components/WeatherCard/WeatherCard";
-import {getWeather} from './utils/getWeather';
 import {connect} from "react-redux";
-import {setLocation, setData} from "./store";
-
+import {setData, setError, fetchData} from "./store";
 
 class AppComponent extends React.Component {
 
-    // state = {
-    //     city: undefined,
-    //     today: undefined,
-    //     time: undefined,
-    //     days: [],
-    //     error: undefined
-    // }
-
-    getWeather = async (event) => {
+    getWeather = (event) => {
         event.preventDefault();
         const city = event.target.elements.city.value;
-        const data = await getWeather(city);
-        this.props.onSetData(data.city, data.time, data.weather, data.error);
+        this.props.onFetchData(city);
     }
 
     render() {
         const {props} = this;
+        const {location, weather} = props;
         return (
             <div className="main">
-                <h1 className="info">Прогноз погоды</h1>
+                <h1 className="info">Прогноз погоды {location.city}</h1>
                 <ChooseCityForm weather={this.getWeather}/>
-                <WeatherCard city ={props.city} time={props.time} today={props.weather.today} days={props.weather.nextDays} error={props.error}/>
-                {/*<button onClick={()=>this.props.onSetLocation(Date.now())}>{location}</button>*/}
+                <WeatherCard city={location.city} time={location.time} today={weather.today} days={weather.nextDays}
+                             error={props.error}/>
             </div>
         );
     }
@@ -39,16 +29,23 @@ class AppComponent extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        location: state.location,
-        time: state.time,
-        weather: state.weather,
+        location: {
+            city: state.city,
+            time: state.time,
+        },
+        weather: {
+            today: state.today,
+            nextDays: state.nextDays,
+        },
         error: state.error
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSetData: (location, time, weather, error) => dispatch(setData(location, time, weather, error))
+        onSetData: (location, weather) => dispatch(setData(location, weather)),
+        onSetError: (error) => dispatch(setError(error)),
+        onFetchData: (city) => dispatch(fetchData(city))
     }
 }
 

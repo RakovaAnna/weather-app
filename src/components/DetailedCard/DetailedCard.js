@@ -10,13 +10,12 @@ class DetailedCard extends React.Component {
         const ms = day.dt * 1000;
         const weekdayName = dayInfo.weekdayName(ms);
         const monthDay = dayInfo.monthDay(ms);
-        const timeG = new Date(this.props.time).toLocaleTimeString("ru", {hour: 'numeric', minute: 'numeric'});
         const imgURL = dayInfo.iconWeather(day.weather[0].icon);
 
         return (
             <div className={style.DetailedCard}>
                 <p className={style.baseData}>Сегодня, {monthDay}</p>
-                <p>{weekdayName}, {timeG}</p>
+                <p>{weekdayName}, {this.props.time}</p>
                 <div className="row">
                     <div className="col-sm-5 align-self-center">
                         <img src={imgURL} width="200" height="200"  alt={day.weather[0].description}/>

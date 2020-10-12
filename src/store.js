@@ -1,9 +1,13 @@
-import {createStore} from 'redux'
+import {applyMiddleware, createStore} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
+import {watchFetchWeather} from "./utils/getWeather";
 
 const initialState = {
-    location: "Пермь",
-    time: Date.now(),
+    location: {
+        city: "Пермь",
+        time: new Date(Date.now()).toLocaleTimeString("ru", {hour: 'numeric', minute: 'numeric'}),
+    },
     weather: {
         today: undefined,
         nextDays: []
@@ -11,49 +15,63 @@ const initialState = {
     error: undefined
 };
 
-export const setLocation = (location) => {
-    return {
-        type: "SET_LOCATION",
-        payload: {
-            location
-        }
-    };
-};
-
-export const setData = (location, time, weather, error) => {
+export const setData = (location, weather) => {
     return {
         type: "SET_DATA",
         payload: {
             location,
-            time,
-            weather,
-            error
+            weather
         }
     };
 };
 
+export const setError = (error) => {
+    return {
+        type: "SET_ERROR",
+        payload: {
+            error
+        }
+    }
+}
+
+export const fetchData = (city) => {
+    return {
+        type: "FETCH_DATA",
+        payload: {
+            city
+        }
+    }
+}
+
 const reducer = (state=initialState, action) => {
     switch (action.type) {
-        case "SET_LOCATION":
-            const newLocation = action.payload.location;
-            return {
-                ...state,
-                location: newLocation
-            };
-            break;
         case "SET_DATA":
             return {
+                ...state,
                 location: action.payload.location,
-                time: action.payload.time,
                 weather: action.payload.weather,
+                error: undefined
+            };
+            break;
+        case "SET_ERROR":
+            return {
+                ...state,
+                location: {
+                    city: undefined,
+                    time: undefined,
+                },
+                weather: {
+                    today: undefined,
+                    nextDays: []
+                },
                 error: action.payload.error
             };
+            break;
         default: return state
     }
 };
 
+const sagaMiddleware = createSagaMiddleware();
 
-export const store = createStore(reducer, composeWithDevTools(
-
-));
-window.store = store;
+export const store = createStore(reducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
+sagaMiddleware.run(watchFetchWeather);
