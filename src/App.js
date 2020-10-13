@@ -2,7 +2,6 @@ import React from 'react';
 import './App.model.css';
 import ChooseCityForm from "./components/ChooseCityForm/ChooseCityForm";
 import WeatherCard from "./components/WeatherCard/WeatherCard";
-import {getWeather} from './utils/getWeather';
 import {api} from './api';
 import * as daysInfo from "./utils/getDaysInfo";
 import {enLayoutKeyboard, ruLayoutKeyboard} from "./utils/autoLayoutKeyboard";
@@ -32,52 +31,26 @@ class App extends React.Component {
     }
 
     handleCitySelect = (city) => {
-        // const dataRu = api.loadWeatherForCity(ruLayoutKeyboard(city))
-        //     .then((cityForecast) => {
-        //         const okRu = this.changedState(cityForecast);
-        //         if (!okRu) {
-        //             const dataEn = api.loadWeatherForCity(enLayoutKeyboard(city))
-        //                 .then((cityForecast) => {
-        //                     const okEn = this.changedState(cityForecast);
-        //                     if (!okEn) {
-        //                         this.setState({
-        //                             city: undefined,
-        //                             time: undefined,
-        //                             today: undefined,
-        //                             days: [],
-        //                             error: "Город не найден"
-        //                         });
-        //                     }
-        //                 })
-        //         }
-        //
-        //     });
+        api.loadWeatherForCity(ruLayoutKeyboard(city))
+            .then((cityForecast) => {
+                const okRu = this.changedState(cityForecast);
+                if (!okRu) {
+                    api.loadWeatherForCity(enLayoutKeyboard(city))
+                        .then((cityForecast) => {
+                            const okEn = this.changedState(cityForecast);
+                            if (!okEn) {
+                                this.setState({
+                                    city: undefined,
+                                    time: undefined,
+                                    today: undefined,
+                                    days: [],
+                                    error: "Город " + city + " не найден"
+                                });
+                            }
+                        })
+                }
 
-        const cities = [
-            ruLayoutKeyboard(city),
-            enLayoutKeyboard(city)
-        ];
-
-        api.loadAll(cities).then((cityForecasts) => {
-            console.log(cityForecasts);
-            // if (cityForecasts !== null) {
-            //     this.setState({
-            //         city: cityForecasts.city.name,
-            //         time: Date.now() + new Date().getTimezoneOffset() * 60 * 1000 + cityForecasts.city.timezone * 1000,
-            //         today: cityForecasts.list.shift(),
-            //         days: cityForecasts.list.filter(reading => reading.dt_txt.includes("12:00:00") && !(reading.dt_txt.includes(daysInfo.today()))),
-            //         error: undefined
-            //     })
-            // } else {
-            //     this.setState({
-            //         city: undefined,
-            //         time: undefined,
-            //         today: undefined,
-            //         days: [],
-            //         error: "Город не найден"
-            //     });
-            // }
-        });
+            });
     }
 
     render() {
