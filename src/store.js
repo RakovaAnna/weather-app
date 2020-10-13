@@ -3,7 +3,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import {watchFetchWeather} from "./utils/getWeather";
 
-const initialState = {
+let initialState = {
     location: {
         city: "Пермь",
         time: new Date(Date.now()).toLocaleTimeString("ru", {hour: 'numeric', minute: 'numeric'}),
@@ -14,6 +14,18 @@ const initialState = {
     },
     error: undefined
 };
+
+initialState = {
+    location: {
+        city: "Пермь",
+        time: new Date(Date.now()).toLocaleTimeString("ru", {hour: 'numeric', minute: 'numeric'}),
+    },
+    weather: {
+        today: undefined,
+        nextDays: []
+    },
+    error: undefined
+}
 
 // TODO Move to selectors.js
 export function getLocation(state) {
@@ -119,4 +131,5 @@ const reducer = (state=initialState, action) => {
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = createStore(reducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
+store.dispatch(fetchData(store.getState().location.city));
 sagaMiddleware.run(watchFetchWeather);

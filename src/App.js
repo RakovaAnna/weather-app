@@ -6,7 +6,10 @@ import {connect} from "react-redux";
 import {setData, setError, fetchData, getLocation, getWeather} from "./store";
 
 class AppComponent extends React.Component {
-
+    componentDidMount() {
+        const {location: {city}, onFetchData} = this.props;
+        onFetchData(city);
+    }
     getWeather = (event) => {
         event.preventDefault();
         const city = event.target.elements.city.value;
