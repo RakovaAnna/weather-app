@@ -1,9 +1,10 @@
 import {applyMiddleware, createStore} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
-import {watchFetchWeather} from "./utils/getWeather";
+import {watchFetchWeather} from "./store/sagas/getWeather";
 
 let initialState = {
+    isLoading: false,
     location: {
         city: "Пермь",
         time: new Date(Date.now()).toLocaleTimeString("ru", {hour: 'numeric', minute: 'numeric'}),
@@ -102,6 +103,16 @@ export const fetchData = (city) => {
 
 const reducer = (state=initialState, action) => {
     switch (action.type) {
+        case actionTypes.SET_LOCATION: {
+            const {city} = action.payload;
+            return {
+                ...state,
+                location: {
+                    city,
+                },
+                isLoading: true,
+            };
+        };
         case "SET_DATA":
             return {
                 ...state,
