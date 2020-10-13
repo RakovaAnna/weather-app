@@ -15,6 +15,14 @@ const initialState = {
     error: undefined
 };
 
+// actionTypes.js
+export const actionTypes = {
+    SET_LOCATION: "SET_LOCATION",
+    SET_WEATHER: "SET_WEATHER",
+    SET_MESSAGE: "SET_MESSAGE",
+};
+
+// deprecated
 export const setData = (location, weather) => {
     return {
         type: "SET_DATA",
@@ -33,6 +41,33 @@ export const setError = (error) => {
         }
     }
 }
+
+export const setLocation = (location) => {
+    return {
+        type: actionTypes.SET_LOCATION,
+        payload: {
+            location,
+        }
+    };
+};
+
+export const setWeather = (weather) => {
+    return {
+        type: actionTypes.SET_WEATHER,
+        payload: {
+            weather,
+        }
+    };
+};
+
+export const setMessage = (message) => {
+    return {
+        type: actionTypes.SET_MESSAGE,
+        payload: {
+            message,
+        }
+    };
+};
 
 export const fetchData = (city) => {
     return {
