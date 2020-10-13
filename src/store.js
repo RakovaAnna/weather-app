@@ -15,11 +15,21 @@ const initialState = {
     error: undefined
 };
 
+// TODO Move to selectors.js
+export function getLocation(state) {
+    return state.location;
+}
+export function getWeather(state) {
+    return state.weather;
+}
+
+
 // actionTypes.js
 export const actionTypes = {
     SET_LOCATION: "SET_LOCATION",
     SET_WEATHER: "SET_WEATHER",
     SET_MESSAGE: "SET_MESSAGE",
+    FETCH_DATA: "FETCH_DATA"
 };
 
 // deprecated
@@ -71,7 +81,7 @@ export const setMessage = (message) => {
 
 export const fetchData = (city) => {
     return {
-        type: "FETCH_DATA",
+        type: actionTypes.FETCH_DATA,
         payload: {
             city
         }

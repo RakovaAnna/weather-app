@@ -2,13 +2,9 @@ import React from "react";
 import {ruLayoutKeyboard, enLayoutKeyboard} from "./autoLayoutKeyboard";
 import {API_KEY, units, lang} from "./local";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {setData, setError} from "../store";
+import {actionTypes, setData, setError} from "../store";
 import * as daysInfo from "./getDaysInfo";
 
-
-export function* watchFetchWeather() {
-    yield takeEvery('FETCH_DATA', fetchWeatherAsync);
-}
 
 export function* fetchWeatherAsync({payload}) {
     try {
@@ -18,6 +14,7 @@ export function* fetchWeatherAsync({payload}) {
                 .toLocaleTimeString("ru", {hour: 'numeric', minute: 'numeric'});
             const dailyData = data.list.filter(reading => reading.dt_txt.includes("12:00:00") && !(reading.dt_txt.includes(daysInfo.today())));
             const weatherNow = data.list.shift();
+
             yield put(setData({city: payload.city, time: timestamp},
                 {today: weatherNow, nextDays: dailyData}));
         } else {
@@ -52,3 +49,7 @@ const getApiWeather = async (city) => {
 //     const dataEn = await getApiWeather(enLayoutKeyboard(city));
 //     return dataEn ? dataEn : null;
 // }
+
+export function* watchFetchWeather() {
+    yield takeEvery(actionTypes.FETCH_DATA, fetchWeatherAsync);
+}
