@@ -6,14 +6,14 @@ import MiniDayCard from "../MiniDayCard/MiniDayCard";
 class WeatherCard extends React.Component {
 
     formatCards = () => {
-        return this.props.days.map((day, index) => <MiniDayCard day={day} key={index}/>)
+        //return this.props.days.map((day, index) => <MiniDayCard day={day} key={index}/>)
     }
 
     render() {
         const {props} = this;
         return (
             <div className="container-fluid">
-                {props.city &&
+                {props.today &&
                 <div>
                     <h2 className="card-title">{props.city}</h2>
                     <div className="row justify-content-center ">
@@ -28,7 +28,7 @@ class WeatherCard extends React.Component {
                     </div>
                 </div>
                 }
-                <p className="error">{props.error}</p>
+                <p className="error">{props.message}</p>
             </div>
         )
     }
