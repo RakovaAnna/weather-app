@@ -9,20 +9,20 @@ export const setCity = (city) => {
     };
 };
 
-export const setNow = (now) => {
+export const setNowInfo = (nowInfo) => {
     return {
-        type: actionType.SET_NOW,
+        type: actionType.SET_NOW_INFO,
         payload: {
-            now,
+            nowInfo,
         }
     };
 }
 
-export const setNextDays = (days) => {
+export const setNextDays = (nextDays) => {
     return {
         type: actionType.SET_NEXT_DAYS,
         payload: {
-            days,
+            nextDays,
         }
     };
 }
@@ -36,9 +36,18 @@ export const setMessage = (message) => {
     }
 }
 
-export const fetchData = (city) => {
+export const fetchDataNow = (city) => {
     return {
-        type: actionType.FETCH_DATA,
+        type: actionType.FETCH_DATA_NOW,
+        payload: {
+            city
+        }
+    }
+}
+
+export const fetchDataNextDays = (city) => {
+    return {
+        type: actionType.FETCH_DATA_NEXT_DAYS,
         payload: {
             city
         }

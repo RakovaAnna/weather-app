@@ -8,15 +8,21 @@ export const reducer = (state = initialState, action) => {
                 ...initialState,
                 city: action.payload.city,
             };
-        case actionType.SET_NOW:
+        case actionType.SET_NOW_INFO:
             return {
                 ...state,
-                now: action.payload.now,
+                nowInfo: action.payload.nowInfo,
             };
         case actionType.SET_NEXT_DAYS:
+            console.log(action);
             return {
                 ...state,
                 nextDays: action.payload.nextDays
+            };
+        case actionType.SET_MESSAGE:
+            return {
+                ...state,
+                message: action.payload.message
             };
         default:
             return state

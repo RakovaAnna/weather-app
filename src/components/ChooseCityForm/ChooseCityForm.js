@@ -18,7 +18,10 @@ class ChooseCityForm extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         this.props.onSetCity(this.state.city);
-        this.props.onCitySelect(this.state.city);
+        //this.props.onCitySelect(this.state.city);
+        this.setState({
+            city: "",
+        });
     }
 
     render() {

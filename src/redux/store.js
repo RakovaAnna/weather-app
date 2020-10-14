@@ -1,12 +1,13 @@
 import {applyMiddleware, createStore} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
-import {watchFetchWeather} from "./getWeather";
+import {watchFetchWeather} from "./sagas/nextDaysSaga";
 import {reducer} from "./reducer";
+import {allWeather} from "./sagas/allWeatherSaga";
 
 export let initialState = {
     city: "Пермь",
-    now: {
+    nowInfo: {
         time: undefined,
         weather: undefined
     },
@@ -17,4 +18,4 @@ export let initialState = {
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = createStore(reducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
-sagaMiddleware.run(watchFetchWeather);
+sagaMiddleware.run(allWeather);
