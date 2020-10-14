@@ -9,3 +9,11 @@
     text-align: center;
 }
 
+.active {
+    /*background-color: green;*/
+}
+
+.toolbar button {
+    width: 100%;
+    border: none;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.model.css';
+import './App.module.css';
 import {ChooseCity} from "./components/ChooseCityForm/ChooseCityForm";
 import {WeatherCardComp} from "./components/WeatherCard/WeatherCard";
 import {connect} from "react-redux";

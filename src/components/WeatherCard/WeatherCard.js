@@ -1,5 +1,5 @@
 import React from "react";
-import style from './WeatherCard.model.css';
+import style from './WeatherCard.module.css';
 import DetailedCard from "../DetailedCard/DetailedCard";
 import MiniDayCard from "../MiniDayCard/MiniDayCard";
 import {fetchDataNextDays, fetchDataNow} from "../../redux/actionsCreators";
@@ -47,14 +47,21 @@ class WeatherCard extends React.Component {
 
     render() {
         const {city, nowInfo, nextDays, message} = this.props;
+        const isToday = this.state.buttonOnToday;
         return (
             <div>
                 <div className="container-fluid">
                     <h2 className="card-title">{city}</h2>
                     <p className="error">{message}</p>
-                    <div className="row align-items-center">
-                        <button className="col-sm-6" onClick={this.onToday}>На сегодня</button>
-                        <button className="col-sm-6" onClick={this.onNextDays}>На несколько дней</button>
+                    <div className={`row align-items-center ${style.toolbar}`}>
+                        <div className="col-sm-6">
+                            <button className={`${isToday ? style.active : ''}`} onClick={this.onToday}>На сегодня
+                            </button>
+                        </div>
+                        <div className="col-sm-6">
+                            <button className="btn btn-outline-secondary" onClick={this.onNextDays}>На несколько дней
+                            </button>
+                        </div>
                     </div>
                     <div>
                         {(this.state.buttonOnToday && nowInfo) &&
