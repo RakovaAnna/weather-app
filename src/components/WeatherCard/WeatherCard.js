@@ -8,8 +8,7 @@ import {connect} from "react-redux";
 class WeatherCard extends React.Component {
 
     state = {
-        buttonOnToday: true,
-        buttonOnNextDays: false,
+        controlTab: true,
     }
 
     componentDidMount() {
@@ -22,10 +21,9 @@ class WeatherCard extends React.Component {
     }
 
     onToday = () => {
-        if (!this.state.buttonOnToday) {
+        if (!this.state.controlTab) {
             this.setState({
-                buttonOnToday: true,
-                buttonOnNextDays: false
+                controlTab: true,
             });
         }
         if (!this.props.nowInfo.time) {
@@ -34,10 +32,9 @@ class WeatherCard extends React.Component {
     }
 
     onNextDays = () => {
-        if (!this.state.buttonOnNextDays) {
+        if (this.state.controlTab) {
             this.setState({
-                buttonOnToday: false,
-                buttonOnNextDays: true
+                controlTab: false,
             });
         }
         if (!this.props.nextDays) {
@@ -47,27 +44,28 @@ class WeatherCard extends React.Component {
 
     render() {
         const {city, nowInfo, nextDays, message} = this.props;
-        const isToday = this.state.buttonOnToday;
+        const isToday = this.state.controlTab;
         return (
             <div>
-                <div className="container-fluid">
-                    <h2 className="card-title">{city}</h2>
-                    <p className="error">{message}</p>
+                <div>
                     <div className={`row align-items-center ${style.toolbar}`}>
                         <div className="col-sm-6">
-                            <button className={`${isToday ? style.active : ''}`} onClick={this.onToday}>На сегодня
+                            <button className={`${isToday ? 'btn btn-secondary' : 'btn btn-outline-secondary'}`} onClick={this.onToday}>На сегодня
                             </button>
                         </div>
                         <div className="col-sm-6">
-                            <button className="btn btn-outline-secondary" onClick={this.onNextDays}>На несколько дней
+                            <button className={`${!isToday ? 'btn btn-secondary' : 'btn btn-outline-secondary'}`} onClick={this.onNextDays}>На несколько дней
                             </button>
                         </div>
                     </div>
+                    <h2 className={style.titleCard}>Погода в городе "{city}"</h2>
+                    <p className={style.error}>{message}</p>
+
                     <div>
-                        {(this.state.buttonOnToday && nowInfo) &&
+                        {(this.state.controlTab && nowInfo) &&
                         <DetailedCard day={nowInfo.weather} city={city} time={nowInfo.time}/>
                         }
-                        {(!this.state.buttonOnToday && nextDays) &&
+                        {(!this.state.controlTab && nextDays) &&
                         <div className="row justify-content-center ">
                             <div className="col-sm-8">
                                 <div className="row align-items-center">

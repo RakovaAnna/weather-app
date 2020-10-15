@@ -18,7 +18,6 @@ class ChooseCityForm extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         this.props.onSetCity(this.state.city);
-        //this.props.onCitySelect(this.state.city);
         this.setState({
             city: "",
         });
@@ -27,10 +26,19 @@ class ChooseCityForm extends Component {
     render() {
         const {city} = this.state;
         return (
-            <form onSubmit={this.onSubmit}>
-                <input type="text" name="city" placeholder="Выбор города" value={city} onChange={this.onCityChange}/>
-                <button>Узнать погоду</button>
-            </form>
+            <div className="row">
+                <div className="col col-sm-12">
+                    <form onSubmit={this.onSubmit}>
+                        <div className="input-group input-group-lg">
+                            <input type="text" name="city" className="form-control" placeholder="Выбор города"
+                                   value={city} onChange={this.onCityChange}/>
+                            <div className="input-group-append">
+                                <button className="btn btn-secondary">Узнать погоду</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         )
     }
 }

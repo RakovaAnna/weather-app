@@ -10,21 +10,8 @@ body {
 .main {
   background: url("./img/home0.jpg") center no-repeat fixed;
   min-height: 100vh;
-  position: relative;
-  width: 100%;
-  -khtml-background-size: cover;
-  -moz-background-size: cover;
-  -ms-background-size: cover;
-  -o-background-size: cover;
-  -webkit-background-size: cover;
   background-size: cover;
   padding: 20px;
-}
-
-form {
-  justify-content: center!important;
-  text-align: center;
-  margin:20px;
 }
 
 h1 {
@@ -46,11 +33,6 @@ p:first-letter, h4:first-letter, h5:first-letter {
   text-transform: uppercase;
 }
 
-.container-fluid {
-  background-color: rgba(245, 255, 255, 0.3);
-  padding: 20px;
-}
-
 .card-weather {
   background-color: rgba(5, 50, 82, 0.5);
   color: #fff;
@@ -59,4 +41,18 @@ p:first-letter, h4:first-letter, h5:first-letter {
   min-width: 230px;
   margin: 10px;
   align-items: center;
+}
+
+.container {
+  background-color: rgba(245, 255, 255, 0.3);
+  padding: 15px 10px;
+  border-radius: 4px;
+}
+
+.titleMain {
+  margin: 20px;
+  text-align: center;
+  color: #4c4f51;
+  text-transform: uppercase;
+  text-shadow: 0.1em 0.1em 0.2em white;
 }

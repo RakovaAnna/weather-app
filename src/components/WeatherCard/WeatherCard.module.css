@@ -9,11 +9,18 @@
     text-align: center;
 }
 
-.active {
-    /*background-color: green;*/
-}
-
 .toolbar button {
     width: 100%;
-    border: none;
+}
+
+.toolbar {
+    margin: 5px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.titleCard {
+    color: #4c4f51;
+    text-align: center;
+    margin: 14px;
 }

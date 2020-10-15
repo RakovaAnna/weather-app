@@ -1,5 +1,6 @@
 .DetailedCard {
     padding: 15px;
+    color: #5f6367;
 }
 
 .baseData {
@@ -8,8 +9,10 @@
     margin: 0px;
 }
 
-.details-weather {
-    font-size: 150%;
+.detailsWeather {
+    font-size: 16px;
+    text-align: center;
+    padding: 0px;
 }
 
 .row {
@@ -18,11 +21,30 @@
 
 .temperature {
     font-weight: bold;
-    font-size: 4em;
+    font-size: 5em;
     margin: 0px;
 }
 
-.feels {
+.tableWeather {
+    margin: 15px 10px;
+    width: 100%;
+    font-size: 14px;
+}
+
+.trWeather {
+    border-bottom: 1px solid #6c757d;
+    border-top: 1px solid #6c757d;
+}
+
+.weatherBase {
+    text-align: center;
+}
+
+.thTitle {
     text-align: left;
-    padding: 0px;
+}
+
+.thDetail {
+    text-align: right;
+    padding-right: 20px;
 }

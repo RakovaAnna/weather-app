@@ -14,7 +14,6 @@ export const reducer = (state = initialState, action) => {
                 nowInfo: action.payload.nowInfo,
             };
         case actionType.SET_NEXT_DAYS:
-            console.log(action);
             return {
                 ...state,
                 nextDays: action.payload.nextDays
